@@ -3,6 +3,7 @@ const mysql = require('mysql2');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const cors = require('cors');
+const verifyToken = require('./authMiddleware');
 
 
 require('dotenv').config();
@@ -108,6 +109,10 @@ app.post('/api/signup', async (req, res) =>{
         res.status(201).send({ message: 'User created successfully!', userId: results.insertId });;
     });
 });
+
+app.get('/api/chart/summary', verifyToken, (req, res) => { });
+
+app.get('/api/chart/reports', verifyToken, (req, res) => { });
 
 const server = app.listen(port, () => {
     console.log(`server on port ${port}`);
