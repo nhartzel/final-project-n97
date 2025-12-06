@@ -3,12 +3,16 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-d
 import Navbar from './components/Navbar';
 import LoginPage from './components/LoginPage';
 import Dashboard from './components/Dashboard';
+import PrivateRoutes from './components/PrivateRoutes';
+import Reports from './components/Reports';
 
 import './App.css'; 
 
 function App() {
   // replace with authentication
-  const isAuthenticated = false; 
+ const isAuthenticated = () => {
+    return localStorage.getItem('token') !== null;
+  };
 
   return (
     <Router>
@@ -16,17 +20,19 @@ function App() {
       <div className="main-content">
         <Routes>
 
-          <Route // main route, serve dashboard or login
-            path="/"
-            element={isAuthenticated ? <Dashboard /> : <Navigate to="/login" />}
-          />
+          {/* PUBLIC ROUTES */}
+          <Route path="/login" element={<LoginPage />} />
+          
+          {/* PROTECTED ROUTES GROUP */}
+          {/* Anything inside this tag is automatically protected! */}
+          <Route element={<PrivateRoutes />}>
+              <Route path="/dashboard" element={<Dashboard />} />
+              <Route path="/reports" element={<Reports />} />
+          </Route>
 
-          <Route
-            path="/login"
-            element={isAuthenticated ? <Navigate to="/dashboard" /> : <LoginPage />}
-          />
-
-          <Route path="*" element={<div><h2>404 Not Found</h2></div>} />
+          {/* DEFAULT REDIRECT */}
+          <Route path="/" element={<Navigate to="/dashboard" replace />} />
+          
         </Routes>
       </div>
     </Router>

@@ -1,11 +1,17 @@
 const express = require('express');
 const mysql = require('mysql2');
 const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
+const cors = require('cors');
+
 
 require('dotenv').config();
 
+
+
 const port = process.env.port || 3000;
 const app = express();
+app.use(cors())
 app.use(express.json());
 
 var pool = mysql.createPool({
@@ -17,12 +23,21 @@ var pool = mysql.createPool({
     ssl: { "rejectUnauthorized": false }
 });
 
+
+// Load the secret key
+const jwtSecret = process.env.JWT_SECRET;
+if (!jwtSecret) {
+    console.error("FATAL ERROR: JWT_SECRET is not defined in the environment variables.");
+    process.exit(1);
+}
+
 app.post('/api/login', async (req, res) => {
     const {username, password} = req.body;
 
+    // construct parametized query to fetch users
     const sql = "SELECT password FROM user WHERE username = ?";
     const vals = [username]
-
+    // query database for request's username/password combination
     pool.query(sql, vals, (err, results) => {
         if (err) { throw err; }
 
@@ -33,21 +48,38 @@ app.post('/api/login', async (req, res) => {
             });
         }
 
+        // fetch user's stored hashed password
         const db_pwd = results[0].password;
-
+        // compare request's password to DB password
         bcrypt.compare(password, db_pwd, (err, isMatch) => {
+            // return a good status and JWT token if login is successful
             if (isMatch) {
+                // craft JWT payload
+                const payload = { 
+                    username: username,
+                };
+                
+                // generate the token
+                const token = jwt.sign(
+                    payload,        
+                    jwtSecret,        
+                    { expiresIn: '5m' } 
+                );
+
                 res.status(200).json({
                     success: true,
                     message: "found matching credentials",
-                    username: username
+                    username: username,
+                    token: token
                 });
-                
+                console.log("user logged in and JWT generated");
+            // return bad response
             } else {
                 res.status(500).json({
                     success: false,
                     message: "something went wrong lol"
                 });
+                console.log("error loggin in user");
             }
         })
     })
