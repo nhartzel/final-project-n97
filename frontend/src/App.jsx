@@ -5,6 +5,7 @@ import LoginPage from './components/LoginPage';
 import Dashboard from './components/Dashboard';
 import PrivateRoutes from './components/PrivateRoutes';
 import Reports from './components/Reports';
+import Summary from './components/Summary';
 
 import './App.css'; 
 
@@ -28,6 +29,7 @@ function App() {
           <Route element={<PrivateRoutes />}>
               <Route path="/dashboard" element={<Dashboard />} />
               <Route path="/reports" element={<Reports />} />
+              <Route path="/summary" element={<Summary />} />
           </Route>
 
           {/* DEFAULT REDIRECT */}

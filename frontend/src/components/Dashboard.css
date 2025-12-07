@@ -1,0 +1,106 @@
+/* Dashboard.css */
+
+/* Main layout container */
+.dashboard-container {
+  padding: 40px;
+  max-width: 1200px;
+  margin: 0 auto;
+  font-family: sans-serif;
+  background-color: #f8f9fa; /* Light grey background for the page */
+  min-height: calc(100vh - 60px); /* Fill screen minus navbar height */
+}
+
+/* Header Section */
+.dashboard-header {
+  margin-bottom: 40px;
+  text-align: center;
+}
+
+.dashboard-header h1 {
+  color: #333;
+  margin-bottom: 10px;
+  font-size: 2.5rem;
+}
+
+.dashboard-header .subtitle {
+  color: #666;
+  font-size: 1.2rem;
+  font-weight: 300;
+}
+
+/* Grid Layout for the Cards */
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: 1fr; /* Stack vertically on mobile */
+  gap: 30px;
+}
+
+/* Desktop: Side by side if you want, or keep stacked for readability. 
+   Currently stacked is better for long text. */
+@media (min-width: 992px) {
+  .dashboard-grid {
+    grid-template-columns: 2fr 1fr; /* Summary takes 2/3rds, Tech takes 1/3rd */
+  }
+}
+
+/* Shared Card Styles */
+.dashboard-card {
+  background: white;
+  border-radius: 8px;
+  padding: 30px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+  border: 1px solid #e1e4e8;
+}
+
+.dashboard-card h2 {
+  color: #2c3e50; /* Dark blue-grey */
+  border-bottom: 2px solid #eee;
+  padding-bottom: 15px;
+  margin-top: 0;
+  margin-bottom: 20px;
+  font-size: 1.5rem;
+}
+
+.dashboard-card p {
+  color: #444;
+  line-height: 1.7; /* High readability */
+  margin-bottom: 20px;
+  font-size: 1.05rem;
+}
+
+/* Specific Summary Card Styling */
+.card-footer {
+  margin-top: 30px;
+  padding-top: 15px;
+  border-top: 1px solid #eee;
+  font-size: 0.9rem;
+  color: #666;
+}
+
+.card-footer a {
+  color: #007bff;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.card-footer a:hover {
+  text-decoration: underline;
+}
+
+/* Specific Tech Card Styling */
+.tech-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.tech-tags span {
+  background-color: #e9ecef;
+  color: #333;
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  border: 1px solid #dee2e6;
+}

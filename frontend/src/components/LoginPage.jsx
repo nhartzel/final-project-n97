@@ -1,53 +1,76 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom'; // 1. Import hook for redirection
+import { useNavigate } from 'react-router-dom';
 import './LoginPage.css'; 
 
 function LoginPage() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const [error, setError] = useState(''); // 2. New state for error messages
+  const [error, setError] = useState('');
+  
+  // New: specific success message (e.g., "Account created!")
+  const [message, setMessage] = useState(''); 
 
-  const navigate = useNavigate(); // 3. Initialize the hook
+  const navigate = useNavigate();
 
-  const handleLogin = async (e) => { // 4. Mark function as async
-      e.preventDefault();
-      setError(''); // Clear previous errors
+  // Helper function to handle both actions since they are 90% similar
+  const performAuth = async (endpoint) => {
+      setError('');
+      setMessage('');
 
       try {
-        // 5. Send POST request to your backend
-        // Ensure the URL matches your backend port (usually 3000)
-        const response = await fetch('http://localhost:3000/api/login', {
+        const response = await fetch(`http://localhost:3000${endpoint}`, {
           method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
+          headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ username, password }),
         });
 
         const data = await response.json();
 
         if (response.ok && data.success) {
-          // 6. On Success: Store token and redirect
-          console.log('Login successful');
-          localStorage.setItem('token', data.token); // Store the JWT
-          navigate('/dashboard'); // Redirect to dashboard route
+          // Success! Both Login and Signup now return a 'token'
+          console.log('Authentication successful');
+          localStorage.setItem('token', data.token);
+          
+          // Optional: Show a quick message before redirecting
+          if (endpoint === '/api/signup') {
+             setMessage('Account created! Redirecting...');
+             setTimeout(() => navigate('/dashboard'), 1000);
+          } else {
+             navigate('/dashboard');
+          }
         } else {
-          // 7. On Failure: Set error message from backend
-          setError(data.message || 'Invalid username or password');
+          // Failure
+          setError(data.message || 'Authentication failed');
         }
 
       } catch (err) {
         console.error('Network error:', err);
         setError('Server not responding. Please try again later.');
       }
-    };
+  };
 
+  // 1. The Login Handler (Triggered by Form Submit / Enter Key)
+  const handleLogin = (e) => {
+      e.preventDefault();
+      performAuth('/api/login');
+  };
 
+  // 2. The Signup Handler (Triggered by Button Click)
+  const handleSignup = (e) => {
+      e.preventDefault(); // Prevent default form submission
+      performAuth('/api/signup');
+  };
 
   return (
     <div className="login-container">
+      {/* We keep onSubmit={handleLogin} so pressing "Enter" still logs you in */}
       <form className="login-form" onSubmit={handleLogin}>
-        <h2>Login</h2>
+        <h2>Welcome</h2>
+        
+        {/* Error & Success Messages */}
+        {error && <div className="error-message">{error}</div>}
+        {message && <div className="success-message">{message}</div>}
+
         <div className="form-group">
           <label htmlFor="username">Username</label>
           <input
@@ -68,7 +91,24 @@ function LoginPage() {
             required
           />
         </div>
-        <button type="submit" className="login-button">Log In</button>
+
+        {/* BUTTON GROUP */}
+        <div className="button-group">
+            {/* Type="submit" makes this the default "Enter" key action */}
+            <button type="submit" className="login-button">
+                Log In
+            </button>
+            
+            {/* Type="button" ensures this doesn't submit the form as a login */}
+            <button 
+                type="button" 
+                onClick={handleSignup} 
+                className="signup-button"
+            >
+                Sign Up
+            </button>
+        </div>
+
       </form>
     </div>
   );

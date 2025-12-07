@@ -1,6 +1,6 @@
-/* Reports.css */
+/* Summary.css */
 
-.reports-container {
+.summary-container {
   padding: 40px;
   max-width: 1200px;
   margin: 0 auto;
@@ -9,31 +9,31 @@
   min-height: calc(100vh - 60px);
 }
 
-.reports-header {
+.summary-header {
   margin-bottom: 40px;
   text-align: center;
 }
 
-.reports-header h1 {
+.summary-header h1 {
   color: #333;
   margin-bottom: 10px;
   font-size: 2.5rem;
 }
 
-.reports-header .subtitle {
+.summary-header .subtitle {
   color: #666;
   font-size: 1.2rem;
   font-weight: 300;
 }
 
-/* Layout Grid */
-.reports-content {
+/* Layout: Stack text on top of chart, or side-by-side on big screens */
+.summary-content {
   display: flex;
   flex-direction: column;
   gap: 30px;
 }
 
-.reports-text-card, .reports-chart-card {
+.summary-text-card, .chart-card {
   background: white;
   border-radius: 8px;
   padding: 30px;
@@ -41,7 +41,7 @@
   border: 1px solid #e1e4e8;
 }
 
-.reports-text-card h2 {
+.summary-text-card h2 {
   color: #2c3e50;
   border-bottom: 2px solid #eee;
   padding-bottom: 15px;
@@ -49,14 +49,14 @@
   font-size: 1.5rem;
 }
 
-.reports-text-card p {
+.summary-text-card p {
   color: #444;
   line-height: 1.7;
   margin-bottom: 15px;
   font-size: 1.05rem;
 }
 
-.reports-chart-card h3 {
+.chart-card h3 {
   text-align: center;
   color: #555;
   margin-bottom: 20px;
@@ -72,11 +72,11 @@
   padding-top: 10px;
 }
 
-/* Desktop View */
+/* Optional: Make text and chart side-by-side on large screens */
 @media (min-width: 992px) {
-  .reports-content {
+  .summary-content {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    align-items: center; /* Center chart vertically relative to text */
+    align-items: start;
   }
 }
