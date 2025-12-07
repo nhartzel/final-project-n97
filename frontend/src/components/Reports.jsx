@@ -16,7 +16,7 @@ function Reports() {
       const token = localStorage.getItem('token');
 
       try {
-        const response = await fetch('http://localhost:3000/api/chart/reports', {
+        const response = await fetch('/api/chart/reports', {
           method: 'GET',
           headers: {
             'Authorization': `Bearer ${token}`,

@@ -18,7 +18,7 @@ function LoginPage() {
       setMessage('');
 
       try {
-        const response = await fetch(`http://localhost:3000${endpoint}`, {
+        const response = await fetch(`${endpoint}`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ username, password }),
