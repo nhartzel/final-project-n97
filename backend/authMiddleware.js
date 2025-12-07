@@ -32,4 +32,4 @@ const verifyToken = (req, res, next) => {
     });
 };
 
-module.exports = verifyToken; // <--- EXPORT IT
+module.exports = verifyToken; 
