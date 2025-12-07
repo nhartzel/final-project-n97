@@ -8,6 +8,7 @@ function Reports() {
   const navigate = useNavigate();
 
   // Colors for the Pie Chart slices (Light -> Dark)
+  // Experimenting (Grey) -> Piloting (Light Blue) -> Scaling (Blue) -> Fully Scaled (Deep Blue)
   const COLORS = ['#003f5c', '#58508d', '#bc5090', '#ff6361'];
 
   useEffect(() => {
@@ -47,36 +48,6 @@ function Reports() {
         <p className="subtitle">Current state of enterprise adoption phases</p>
       </div>
 
-      {/* Chart Section */}
-      <div className="reports-chart-card">
-        <h3>Adoption Stage Distribution</h3>
-        <div style={{ width: '100%', height: 400 }}>
-          <ResponsiveContainer>
-            <PieChart>
-              <Pie
-                data={chartData}
-                cx="50%"
-                cy="50%"
-                labelLine={false}
-                label={({ name, percent }) => `${name} ${(percent * 100).toFixed(0)}%`}
-                outerRadius={120}
-                fill="#8884d8"
-                dataKey="value"
-              >
-                {chartData.map((entry, index) => (
-                  <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-                ))}
-              </Pie>
-              <Tooltip />
-              <Legend verticalAlign="bottom" height={36}/>
-            </PieChart>
-          </ResponsiveContainer>
-        </div>
-        <div className="chart-source">
-          <strong>Source:</strong> Internal API / Aggregated Industry Metrics
-        </div>
-      </div>
-
       <div className="reports-content">
         
         {/* Text Section */}
@@ -95,6 +66,36 @@ function Reports() {
             early adopters who have successfully integrated Agentic AI into core workflows, likely serving 
             as the blueprint for the rest of the market in 2026.
           </p>
+        </div>
+
+        {/* Chart Section */}
+        <div className="reports-chart-card">
+          <h3>Adoption Stage Distribution</h3>
+          <div style={{ width: '100%', height: 400 }}>
+            <ResponsiveContainer>
+              <PieChart>
+                <Pie
+                  data={chartData}
+                  cx="50%"
+                  cy="50%"
+                  labelLine={false}
+                  label={({ name, percent }) => `${name} ${(percent * 100).toFixed(0)}%`}
+                  outerRadius={120}
+                  fill="#8884d8"
+                  dataKey="value"
+                >
+                  {chartData.map((entry, index) => (
+                    <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                  ))}
+                </Pie>
+                <Tooltip />
+                <Legend verticalAlign="bottom" height={36}/>
+              </PieChart>
+            </ResponsiveContainer>
+          </div>
+          <div className="chart-source">
+            <strong>Source:</strong> Internal API / Aggregated Industry Metrics
+          </div>
         </div>
 
       </div>

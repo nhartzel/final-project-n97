@@ -44,6 +44,24 @@ function Summary() {
         <p className="subtitle">Cost reductions attributed to Generative AI adoption</p>
       </div>
 
+      <div className="summary-content">
+        <div className="summary-text-card">
+          <h2>Efficiency Gains in Technical Sectors</h2>
+          <p>
+            The latest data from McKinsey’s 2025 report reveals a distinct correlation between technical density 
+            and AI-driven cost savings. <strong>Software Engineering</strong> and <strong>Manufacturing</strong> lead the pack, 
+            with 56% of respondents in both sectors reporting significant cost decreases. This aligns with the rise of 
+            "Agentic AI," where autonomous coding assistants and predictive maintenance agents are now mature enough 
+            to replace manual workflows.
+          </p>
+          <p>
+            Service-oriented functions like <strong>HR (51%)</strong> and <strong>Marketing (49%)</strong> are following closely behind, 
+            leveraging AI for automated drafting and candidate screening. However, highly regulated sectors like 
+            <strong>Legal and Risk (45%)</strong> show slightly lower efficiency gains, likely due to the "human-in-the-loop" 
+            requirements that limit full automation.
+          </p>
+        </div>
+
         <div className="chart-card">
           <h3>Respondents reporting cost decreases by function</h3>
           <div style={{ width: '100%', height: 400 }}>
@@ -54,6 +72,7 @@ function Summary() {
               >
                 <CartesianGrid strokeDasharray="3 3" vertical={false} />
                 
+                {/* FIX: Tilted labels to handle long strings */}
                 <XAxis 
                   dataKey="label" 
                   angle={-45} 
@@ -83,25 +102,6 @@ function Summary() {
             <strong>Source:</strong> McKinsey Global Survey on AI (2025)
           </div>
         </div>
-
-      <div className="summary-content">
-        <div className="summary-text-card">
-          <h2>Efficiency Gains in Technical Sectors</h2>
-          <p>
-            The latest data from McKinsey’s 2025 report reveals a distinct correlation between technical density 
-            and AI-driven cost savings. <strong>Software Engineering</strong> and <strong>Manufacturing</strong> lead the pack, 
-            with 56% of respondents in both sectors reporting significant cost decreases. This aligns with the rise of 
-            "Agentic AI," where autonomous coding assistants and predictive maintenance agents are now mature enough 
-            to replace manual workflows.
-          </p>
-          <p>
-            Service-oriented functions like <strong>HR (51%)</strong> and <strong>Marketing (49%)</strong> are following closely behind, 
-            leveraging AI for automated drafting and candidate screening. However, highly regulated sectors like 
-            <strong>Legal and Risk (45%)</strong> show slightly lower efficiency gains, likely due to the "human-in-the-loop" 
-            requirements that limit full automation.
-          </p>
-        </div>
-
       </div>
     </div>
   );
