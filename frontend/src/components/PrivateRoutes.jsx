@@ -1,5 +1,6 @@
 import { Outlet, Navigate } from 'react-router-dom';
 
+// handles availability of protected routes on the front end
 const PrivateRoutes = () => {
     const token = localStorage.getItem('token');
     
