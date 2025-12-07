@@ -7,7 +7,7 @@ function LoginPage() {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   
-  // New: specific success message (e.g., "Account created!")
+  // specific success message (e.g., "Account created!")
   const [message, setMessage] = useState(''); 
 
   const navigate = useNavigate();
@@ -27,11 +27,10 @@ function LoginPage() {
         const data = await response.json();
 
         if (response.ok && data.success) {
-          // Success! Both Login and Signup now return a 'token'
           console.log('Authentication successful');
           localStorage.setItem('token', data.token);
           
-          // Optional: Show a quick message before redirecting
+          // Show a quick message before redirecting
           if (endpoint === '/api/signup') {
              setMessage('Account created! Redirecting...');
              setTimeout(() => navigate('/dashboard'), 1000);
@@ -63,7 +62,7 @@ function LoginPage() {
 
   return (
     <div className="login-container">
-      {/* We keep onSubmit={handleLogin} so pressing "Enter" still logs you in */}
+      {/* Default submit action handled as 'login' attempt */}
       <form className="login-form" onSubmit={handleLogin}>
         <h2>Welcome</h2>
         
@@ -94,7 +93,7 @@ function LoginPage() {
 
         {/* BUTTON GROUP */}
         <div className="button-group">
-            {/* Type="submit" makes this the default "Enter" key action */}
+            {/* Type="submit" makes this the default action */}
             <button type="submit" className="login-button">
                 Log In
             </button>
