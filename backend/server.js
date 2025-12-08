@@ -5,19 +5,19 @@ const jwt = require('jsonwebtoken');
 const cors = require('cors');
 const verifyToken = require('./authMiddleware');
 
-
+// pull environment variables
 require('dotenv').config();
 
 
-
+// set up dependencies for hosting
 const port = process.env.port || 3000;
 const app = express();
 app.use(cors())
 app.use(express.json());
 
+// establish database connection pool
 var pool = mysql.createPool({
     host : process.env.DB_HOST,
-    port : process.env.DB_PORT,
     user : process.env.DB_USER,
     password : process.env.DB_PASSWORD,
     database : process.env.DB_DATABASE,
@@ -32,6 +32,7 @@ if (!jwtSecret) {
     process.exit(1);
 }
 
+// Login API route
 app.post('/api/login', async (req, res) => {
     const {username, password} = req.body;
 
@@ -66,7 +67,7 @@ app.post('/api/login', async (req, res) => {
                     jwtSecret,        
                     { expiresIn: '5m' } 
                 );
-
+                // returned JSON with good status and token
                 res.status(200).json({
                     success: true,
                     message: "found matching credentials",
@@ -87,14 +88,11 @@ app.post('/api/login', async (req, res) => {
 
 });
 
-// Ensure you have these imported at the top of server.js
-// const bcrypt = require('bcryptjs');
-// const jwt = require('jsonwebtoken');
-
+// API route for handling signup
 app.post('/api/signup', async (req, res) => {
     const { username, password } = req.body;
 
-    // 1. Validation: Fail fast if data is missing
+    // Validation: Fail fast if data is missing
     if (!username || !password) {
         return res.status(400).json({
             success: false,
@@ -103,14 +101,13 @@ app.post('/api/signup', async (req, res) => {
     }
 
     try {
-        // 2. Hash the Password
-        // We use async here to avoid blocking the main thread
+        // Hash the Password
         const salt = await bcrypt.genSalt(10);
         const hashedPassword = await bcrypt.hash(password, salt);
         const date = new Date();
 
         // 3. Database Insertion
-        // We rely on MySQL's 'UNIQUE' constraint to handle the duplicate check for us.
+        // uses MySQL's 'UNIQUE' constraint to handle the duplicate check for us.
         const sql = 'INSERT INTO user (username, password, signedup) VALUES (?, ?, ?)';
         const values = [username, hashedPassword, date];
 
@@ -125,6 +122,7 @@ app.post('/api/signup', async (req, res) => {
                         message: "Username already taken." 
                     });
                 }
+                // return bad JSON status for signup error
                 console.error("Signup DB Error:", error);
                 return res.status(500).json({ 
                     success: false, 
@@ -132,19 +130,19 @@ app.post('/api/signup', async (req, res) => {
                 });
             }
 
-            // B. Success! Generate the Token (Auto-Login)
+            // Generate the Token on success (Auto-Login)
             const tokenPayload = { 
-                id: results.insertId, // The ID of the row we just made
+                id: results.insertId, 
                 username: username 
             };
 
             const token = jwt.sign(
                 tokenPayload, 
                 process.env.JWT_SECRET, 
-                { expiresIn: '5m' } // Match your login expiration time
+                { expiresIn: '5m' } // 5 minute time to live on token
             );
 
-            // C. Send Response
+            // Send Response
             res.status(201).json({ 
                 success: true, 
                 message: 'User created successfully!',
@@ -160,49 +158,53 @@ app.post('/api/signup', async (req, res) => {
     }
 });
 
+// API route to serve chart data for summary page
 app.get('/api/chart/summary', verifyToken, (req, res) => {
     const sql = 'SELECT label, value FROM summary_chart';
-    
+    // fetch chart data from database
     pool.query(sql, (err, results) => {
         if (err) {
             console.error("Database error:", err);
             return res.status(500).json({ message: "Error fetching data" });
         }
-        // 'results' is already an array of objects: [{ label: 'IT', value: 54 }, ...]
+        // returns the JSON data of query results
         res.json(results);
     });
 });
 
+// 
 app.get('/api/chart/reports', verifyToken, (req, res) => {
-    // ✨ THE MAGIC TRICK: "SELECT label AS name"
-    // This automatically renames the key in the JSON response
+    // "SELECT label AS name" automatically renames the key in the JSON response
+    // makes it useable as-is for rechart pie chart
     const sql = 'SELECT label AS name, value FROM reports_chart';
-
+    // query database for chart data
     pool.query(sql, (err, results) => {
         if (err) {
             console.error("Database error:", err);
             return res.status(500).json({ message: "Error fetching data" });
         }
-        // Result is now: [{ name: "Fully Scaled", value: 7 }, ...]
+        // return name: x value: y JSON for reports pie chart
         res.json(results);
     });
 });
 
+// listen on port 3000
 const server = app.listen(port, () => {
     console.log(`server on port ${port}`);
 });
 
+// shutdown procedure to safely close database pool on SIGINT
 process.on('SIGINT', () => {
-    console.log('\n🚨 Received SIGINT signal. Starting graceful shutdown...');
+    console.log('\nReceived SIGINT signal. Starting graceful shutdown...');
     server.close(() => {
-        console.log('🌐 HTTP server closed.');
+        console.log('HTTP server closed.');
 
         pool.end((err) => {
             if (err) {
-                console.error('❌ Error closing database pool:', err.stack);
+                console.error('Error closing database pool:', err.stack);
                 process.exit(1); 
             }
-            console.log('💾 Database pool closed gracefully.');
+            console.log('Database pool closed.');
             process.exit(0); 
         });
     });

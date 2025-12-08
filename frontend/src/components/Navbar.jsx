@@ -19,7 +19,7 @@ function Navbar() {
   return (
     <nav className="navbar">
       <div className="navbar-brand">
-        <Link to="/">Final Project</Link>
+        <Link to="/">N97 - Recent Advances in Generative AI</Link>
       </div>
       
       <ul className="navbar-links">
