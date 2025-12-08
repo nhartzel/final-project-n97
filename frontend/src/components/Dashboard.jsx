@@ -45,7 +45,7 @@ function Dashboard() {
         <div className="dashboard-card tech-card">
           <h2>Technical Architecture</h2>
           
-          <h3>Infrastructure & Hosting</h3>
+          <h3 style={{ color: '#2c3e50'}}>Infrastructure & Hosting</h3>
           <p>
             The entire stack is hosted on a <strong>DigitalOcean Droplet</strong> running Ubuntu 24.04 LTS. 
             <strong>NGINX</strong> serves as the primary web server and reverse proxy. It listens on public port 80, 
@@ -54,7 +54,7 @@ function Dashboard() {
              process management.
           </p>
           
-          <h3>Authentication & Security</h3>
+          <h3 style={{ color: '#2c3e50'}}>Authentication & Security</h3>
           <p>
             Security is implemented via a stateless <strong>JSON Web Token (JWT)</strong> architecture:
           </p>
