@@ -14,11 +14,15 @@ function Dashboard() {
         <div className="dashboard-card summary-card">
           <h2>The Rise of Agentic AI</h2>
           <p>
-            According to McKinsey’s "State of AI in 2025" report, the artificial intelligence landscape has 
+            In the last 6 months there have been large scale leaps and bounds Generative AI. Big releases like 
+            GPT 5 and Gemini 3 have pushed generative AI from large language models to even larger, more broadly
+             capable multimodal foundation models capable of handling many types of data. This propelling people 
+             and corporate entities to push further the complexity of tasks they use generative AI to accomplish.
+             in According to McKinsey’s "State of AI in 2025" report, the artificial intelligence landscape has 
             undergone a fundamental shift from passive generation to active execution. While 2023–2024 was 
             defined by "Chatbots" that could merely write text, 2025 has ushered in the era of 
             "Agentic AI"—autonomous systems capable of planning multi-step workflows, executing tasks, and 
-            correcting their own errors without human intervention.
+            correcting their own errors without human intervention. 
           </p>
           <p>
             The data highlights a rapid pivot in enterprise strategy: <strong>62% of organizations</strong> are now actively 
