@@ -44,24 +44,47 @@ function Dashboard() {
         {/* Section 2: Technical Stack (Requirement: Tech aspects & Infrastructure) */}
         <div className="dashboard-card tech-card">
           <h2>Technical Architecture</h2>
+          
+          <h3>Infrastructure & Hosting</h3>
           <p>
-            This application is a <strong>Single Page Application (SPA)</strong> designed with a fully decoupled architecture. 
-            The frontend is built using <strong>React</strong> and served via <strong>NGINX</strong> on standard HTTP port 80. 
-            It communicates asynchronously with a <strong>Node.js/Express</strong> backend running independently on port 3000.
+            The entire stack is hosted on a <strong>DigitalOcean Droplet</strong> running Ubuntu 24.04 LTS. 
+            <strong>NGINX</strong> serves as the primary web server and reverse proxy. It listens on public port 80, 
+            serving the static React frontend files directly while strictly proxying API requests (<code>/api/*</code>) 
+            to the <strong>Node.js/Express</strong> backend running internally on port 3000 via <strong>PM2</strong> 
+            process management.
           </p>
+          
+          <h3>Authentication & Security</h3>
           <p>
-            Security is managed through <strong>JSON Web Tokens (JWT)</strong>. Upon login, the backend issues a signed token 
-            which the frontend stores in LocalStorage and attaches to the headers of subsequent API requests. 
-            The backend middleware intercepts these requests to validate identity before serving protected data. 
-            All persistent user data is stored in a <strong>MySQL</strong> database hosted on the same virtual private server.
+            Security is implemented via a stateless <strong>JSON Web Token (JWT)</strong> architecture:
           </p>
+          <ul style={{ marginLeft: '20px', marginBottom: '15px', lineHeight: '1.6' }}>
+            <li>
+              <strong>Backend:</strong> Passwords are never stored in plain text; they are salted and hashed using <code>bcrypt</code>. 
+              Upon login, the server signs a JWT containing the user identity, encrypted with a private server-side secret.
+            </li>
+            <li>
+              <strong>Frontend:</strong> The client stores this token in <code>localStorage</code>. A custom authentication handler 
+              automatically retrieves this token and attaches it to the <code>Authorization: Bearer</code> header for all 
+              subsequent requests to protected routes.
+            </li>
+          </ul>
+
+          <p>
+            Data persistence is handled by a <strong>MySQL</strong> database running on the same droplet (port 3306). 
+            For security, the database is bound to the local loopback address, making it inaccessible from the public 
+            internet and reachable only by the local backend service.
+          </p>
+
           <div className="tech-tags">
-            <span>React</span>
-            <span>Node.js</span>
-            <span>Express</span>
-            <span>MySQL</span>
+            <span>DigitalOcean</span>
+            <span>Ubuntu 24.04</span>
             <span>NGINX</span>
-            <span>JWT</span>
+            <span>PM2</span>
+            <span>React + Vite</span>
+            <span>Node.js</span>
+            <span>MySQL</span>
+            <span>JWT Auth</span>
           </div>
         </div>
       </div>
