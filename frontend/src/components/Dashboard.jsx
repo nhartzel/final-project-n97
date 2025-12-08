@@ -14,25 +14,29 @@ function Dashboard() {
         <div className="dashboard-card summary-card">
           <h2>The Rise of Agentic AI</h2>
           <p>
-            In the last 6 months there have been large scale leaps and bounds Generative AI. Big releases like 
-            GPT 5 and Gemini 3 have pushed generative AI from large language models to even larger, more broadly
-             capable multimodal foundation models capable of handling many types of data. This propelling people 
-             and corporate entities to push further the complexity of tasks they use generative AI to accomplish.
-             in According to McKinsey’s "State of AI in 2025" report, the artificial intelligence landscape has 
-            undergone a fundamental shift from passive generation to active execution. While 2023–2024 was 
-            defined by "Chatbots" that could merely write text, 2025 has ushered in the era of 
-            "Agentic AI"—autonomous systems capable of planning multi-step workflows, executing tasks, and 
-            correcting their own errors without human intervention. 
-          </p>
-          <p>
-            The data highlights a rapid pivot in enterprise strategy: <strong>62% of organizations</strong> are now actively 
-            piloting autonomous agents, and <strong>23%</strong> have successfully scaled them into production environments. 
-            This transition changes the game by moving AI from a "support tool" that answers questions to a "task owner" 
-            that drives outcomes. High-performing organizations are no longer just using AI to summarize meetings; 
-            they are redesigning entire business workflows—particularly in IT and knowledge management—where agents 
-            now function as digital coworkers capable of independently troubleshooting systems and managing complex 
-            data pipelines. This evolution marks the end of AI as a novelty and the beginning of AI as a core operational engine.
-          </p>
+              The last six months have witnessed monumental leaps in Generative AI. Major releases like 
+              <strong>GPT-5</strong> and <strong>Gemini 3</strong> have evolved the landscape from simple 
+              Large Language Models to powerful <strong>multimodal foundation models</strong> capable of 
+              reasoning across text, code, and video. This technological leap is propelling enterprises 
+              to move beyond simple tasks and embrace complexity.
+            </p>
+            
+            <p>
+              According to McKinsey’s "State of AI in 2025" report, this has triggered a fundamental shift 
+              from passive generation to active execution. While 2023–2024 was defined by "Chatbots" 
+              that could merely write text, 2025 has ushered in the era of <strong>"Agentic AI"</strong>—autonomous 
+              systems capable of planning multi-step workflows, executing tasks, and correcting their own 
+              errors without human intervention.
+            </p>
+
+            <p>
+              The data highlights a rapid pivot in enterprise strategy: <strong>62% of organizations</strong> are 
+              now actively piloting autonomous agents, and <strong>23%</strong> have successfully scaled them 
+              into production environments. This transition moves AI from a "support tool" to a "task owner." 
+              High-performing organizations are now redesigning entire business workflows—particularly in IT 
+              and knowledge management—where agents function as digital coworkers capable of independently 
+              troubleshooting systems and managing complex data pipelines.
+            </p>
           <div className="card-footer">
             <strong>Source: </strong> 
             <a 
