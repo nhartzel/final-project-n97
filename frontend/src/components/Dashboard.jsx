@@ -51,14 +51,14 @@ function Dashboard() {
             <strong>NGINX</strong> serves as the primary web server and reverse proxy. It listens on public port 80, 
             serving the static React frontend files directly while strictly proxying API requests (<code>/api/*</code>) 
             to the <strong>Node.js/Express</strong> backend running internally on port 3000 via <strong>PM2</strong> 
-            process management.
+             process management.
           </p>
           
           <h3>Authentication & Security</h3>
           <p>
             Security is implemented via a stateless <strong>JSON Web Token (JWT)</strong> architecture:
           </p>
-          <ul style={{ marginLeft: '20px', marginBottom: '15px', lineHeight: '1.6' }}>
+          <ul style={{ marginLeft: '20px', marginBottom: '15px', lineHeight: '1.6', color: '#444'}}>
             <li>
               <strong>Backend:</strong> Passwords are never stored in plain text; they are salted and hashed using <code>bcrypt</code>. 
               Upon login, the server signs a JWT containing the user identity, encrypted with a private server-side secret.
